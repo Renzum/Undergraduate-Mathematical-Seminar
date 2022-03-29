@@ -1,0 +1,253 @@
+\documentclass[18pt]{beamer}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\usepackage{xcolor}
+\graphicspath{{./images/}}
+
+\usetheme{metropolis}
+\setbeamertemplate{frame numbering}[fraction]
+\useoutertheme{metropolis}
+\useinnertheme{metropolis}
+\usefonttheme{metropolis}
+\usecolortheme{spruce}
+
+\title{Undergraduate Seminar Presentation}
+\subtitle{Number of Primes}
+\author{Karen Arzumanyan}
+\date{November 22, 2021}
+
+\begin{document}
+\metroset{block=fill}
+
+\begin{frame}
+    \maketitle
+\end{frame}
+
+\begin{frame}{The number of primes until $x$, the function $\pi(x)$}
+    \begin{definition}
+        The function $\pi(x)$ takes an integer, and returns the number of prime numbers that are less or equal to that integer.
+        \pause{}
+        \[\pi(x) = \sum\limits_{p \leq x} 1 = \#\{p \leq  x | p \text{ is prime.}\}\]
+    \end{definition}
+\end{frame}
+
+\begin{frame}{Behavior of $\pi(x)$}
+   The function $\pi(x)$ behaves roughly like $\frac{x}{\log{x}}$ as $x \rightarrow \infty$
+   \pause{}
+   \[\lim\limits_{x \rightarrow \infty} \pi(x)\frac{\log{x}}{x} = 1\]
+   \pause{}
+   This was proven by \textit{J. Hadamard} and \textit{C. de la Vallé Poussin} in 1896.\\
+   \pause{}
+   The proof is too complicated and is beyond the scope of this presentation.
+\end{frame}
+
+\begin{frame}{Chebyshev's Theorem}
+    \begin{theorem}[Chebyshev]
+    There exist constants $0 < c_1 < 1 < c_2$ such that \textit{for all} $x \geq 1$ we have that
+    \[c_1 \frac{x}{\log{x}} \leq \pi(x) \leq c_2 \frac{x}{\log{x}}\]
+    \end{theorem}
+    \vspace{1em}
+    \pause{}
+    \textit{Pavnutii Lvovich Chebyshev} proved this theorem for $c_1 = 0.92$ and $c_2 = 1.11$.\\
+    \pause{}
+    \vspace{1em}
+    We will prove the theorem for weaker bounds.
+\end{frame}
+
+\begin{frame}{Sum of logs}
+   \begin{block}{Sum of Logs}
+       We define a function \[\theta(x) = \sum\limits_{p \leq x} \log{p} \]
+       and specify that $\theta(1) = 0$.
+   \end{block} 
+   \pause{}
+   \vspace{0.5em}
+   If we compare $\theta(x)$ and $\pi(x)$ we can see that since $\log{p} \leq \log{x}$
+   \[\theta(x) = \sum\limits_{p \leq x} \log{p} \leq \sum \limits_{p \leq x} \log{x} = \pi(x) \log{x}\]
+   \pause{}
+   Therefore,
+   \[\frac{\theta(x)}{x} \leq \frac{\pi(x)}{\big(\frac{x}{\log{x}}\big)}\]
+\end{frame}
+
+\begin{frame}{Small $\epsilon$}
+    Suppose we have $0 < \epsilon < 1$, then
+    \vspace{1em}
+    \[\theta(x) = \sum\limits_{p \leq x} \log{p} = \sum\limits_{p \leq x^{1-\epsilon}} \log{p} + \sum\limits_{x ^{1 -\epsilon} < p \leq x} \log{p}\]
+    \pause{}
+    \[\geq (1-\epsilon)\Big(\pi(x)-\pi\big(x^{1-\epsilon}\big)\Big)\log{x}\]
+    \pause{}
+    \[\geq (1-\epsilon) \pi(x) \log{x} - \pi(x^{1-\epsilon}) \log{x}\]
+    \pause{}
+    \[\geq (1 - \epsilon) \pi(x)\log{x} - x^{1-\epsilon}\log{x}\]
+
+\end{frame}
+
+\begin{frame}{Small $\epsilon$}
+    Now we have that
+    \[\theta(x) \geq (1 - \epsilon) \pi(x)\log{x} - x^{1-\epsilon}\log{x}\]
+    \pause{}
+    If we divide both sides by $x$, we will get
+    \[\frac{\theta(x)}{x} \geq (1-\epsilon)\frac{\pi(x)}{\big(\frac{x}{\log{x}}\big)} - \frac{\log{x}}{x^{\epsilon}}\]
+    \pause{}
+    \textbf{Remark:} Recall that we also had
+  \[\frac{\theta(x)}{x} \leq \frac{\pi(x)}{\big(\frac{x}{\log{x}}\big)}\]
+    Since the term $\frac{\log{x}}{x^{\epsilon} }$ vanishes as $x \rightarrow \infty$, we can go back and forth between asymptotic formulas of $\pi(x)$ and $\theta(x)$.
+
+\end{frame}
+
+\begin{frame}{Lemma for $\theta(x)$}
+    \begin{Lemma}
+        For all $x \geq 1$ we have,
+        \[\theta(x) < (4\log{2})x\]
+    \end{Lemma}
+\end{frame}
+
+\begin{frame}{Lemma          for $\theta(x)$}
+    \begin{block}{Proof.}
+        Let's consider the binomial coefficient
+        \[{2n \choose n} = \frac{(2n)(2n-1)\ldots(n+1)}{n!} < 2^{2n} \]
+        \pause{}
+        where the inequality follows from
+    \[2^{2n} = (1+1)^{2n} = \sum\limits_{k = 0} ^{2n} {2n \choose k}1^{2n-k}1^{k} > {2n \choose n}\]
+        \pause{}
+        We know that every prime $p \in (n, 2n]$ will appear in the numerator, but not in the denominator.\\
+        \pause{}
+        Therefore,
+        \[\prod\limits_{n < p \leq 2n} p \leq {2n \choose n} < 2^{2n}\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Proof for Lemma for $\theta(x)$}
+    \begin{block}{Proof.}
+        Hence, taking the $\log{}$ of both sides
+        \[\sum\limits_{n < p \leq 2n} \log{p} < \log{2^{2n}}\]
+        \pause{}
+        That is,
+        \[\theta(2n)-\theta(n) < (2\log{2})n\]
+        \pause{}
+        In particular, taking $n = 2^{k-1}$, we get that
+        \[\theta(2^{k})-\theta(2^{k-1}) < (2\log{2})2^{k-1}\]
+        \pause{}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lemma          for $\theta(x)$}
+    \begin{block}{Proof.}
+        If we apply a telescopic sum,
+        \[\sum\limits_{k=1} ^{m} \theta(2^{k}) - \theta(2^{k-1})\]
+        \pause{}
+        \[=\Big(\theta(2)-\theta(1)\Big) + \Big(\theta(4) - \theta(2)\Big) + \ldots + \Big(\theta(2^{m}) - \theta(2^{m-1})\Big)\]
+        \pause{}
+        \[= \theta(2^{m}) - \theta(1) = \theta(2^{m})\]
+        \pause{}
+        Thus, together with the inequality from before
+        \[\theta(2^{m}) \leq (2\log{2}) \sum\limits_{k=1} ^{m} 2^{k-1} < (2\log{2})2^{m}\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lemma for $\theta(x)$}
+    \begin{block}{Proof.}
+       For an arbitrary $x \geq 1$, choose an integer $m$ such that $2^{m-1} \leq x < 2^{m}$.
+       \pause{}
+       Then,
+       \[\theta(x) \leq \theta(2^{m}) < (2\log{2})2^{m} \leq (4\log{2})x\]
+       \pause{}
+       that is
+       \[\theta(x) \leq (4\log{2})x\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Upper bound of Chebyshev}
+    \begin{block}{Proof.}
+        We already know that,
+            \[(4\log{2})x \geq \theta(x) \geq \sum\limits_{\sqrt{x} < p \leq x} \log{p}\]
+        \pause{}
+        \[\geq \log{(\sqrt{x})}(\pi(x) - \pi(\sqrt{x})) \geq \frac{1}{2}\log{(x)}(\pi(x)-\pi(\sqrt{x}))\]
+        \pause{}
+        \[\geq \frac{1}{2}\log{(x)}\pi(x)-\frac{1}{2}\log{(x)}\sqrt{x}\]
+        where the last inequality follows from $\pi(\sqrt{x}) \leq \sqrt{x}$.\\
+        Equivalently,
+        \[\frac{1}{2}\log{(x)}\pi(x) \leq (4\log{2})x + \frac{1}{2}\log{(x)}\sqrt{x}\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Upper bound of Chebyshev}
+   \begin{block}{Proof.}
+        Dividing both sides of the last inequality by $\frac{1}{2}\log{(x)}$, we get
+        \[\pi(x) \leq (8\log{2})\frac{x}{\log{x}} + \sqrt{x} \leq (8\log{2}+2)\frac{x}{\log{x}}\]
+        \pause{}
+        where we used the simple inequality $\sqrt{x} < \frac{2x}{\log{x}}$ for all $x \geq 2$.
+        \pause{}
+    \pause{}
+    Therefore
+    \[c_2 = 8\log{2} + 2 \approx 4.41\]
+   \end{block} 
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{block}{Proof of the Lower Bound}
+        For the lower bound, let us consider the following binomial coefficient inequality
+        \[{2n \choose n} = \prod\limits_{1 \leq k \leq n} \frac{k+n}{k} \geq 2^{n}\]
+        \pause{}
+        We now write
+        \[{2n \choose n} = \prod\limits_{p < 2n} p^{\alpha_p} \geq 2^{n}\]
+        for $\alpha_p > 0$
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{lemma}
+        The largest power of $p$ dividing $n!$ is given by
+        \[\nu_p(n!) = \sum\limits_{k = 1} ^{\infty} \Bigr\lfloor{\frac{n}{p^{k}}}\Bigr\rfloor\]
+    \end{lemma}
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{block}{Proof.}
+        As ${2n \choose n} = \frac{2n!}{(n!)^{2}}$, then the power of $p$ in the decomposition of ${2n \choose n}$ can be calculated by subtracting twice the power of $p$ in the decomposition of $n!$ from the power of $p$ in the decomposition of $(2n)!$. Applying the previous lemma,
+        \[\alpha_p = \sum\limits_{j = 1} ^{t_p} \Bigg(\Bigr\lfloor\frac{2n}{p^{j}}\Bigr\rfloor - 2\Bigr\lfloor\frac{n}{p^{j}}\Bigr\rfloor\Bigg) = \sum\limits_{j=1} ^{t_p} \Bigr\lfloor\frac{2n}{p_j}\Bigr\rfloor - 2 \sum\limits_{j = 1} ^{t_p} \Bigr\lfloor\frac{n}{p_j}\Bigr\rfloor\]
+        where $t_p$ is the largest integer such that $p^{t_p} \leq 2n$.
+        \newline
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{block}{Proof.}
+        Taking the $\log{}$ of both sides gives $t_p = \Bigr\lfloor\frac{\log{2n}}{\log{p}}\Bigr\rfloor$, implying
+        \[n\log{2} \leq \sum\limits_{p < 2n} t_p \log{p} = \sum\limits_{p < 2n} \Bigr\lfloor\frac{\log{2n}}{\log{p}}\Bigr\rfloor \log{p}\]
+        \pause{}
+        Now, we need to separate the right hand side (RHS) into two separate sums and deal with them individually.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{block}{Proof.}
+        We have,
+        \[RHS = \sum\limits_{p < \sqrt{2n}} \Bigr\lfloor\frac{\log{2n}}{\log{p}} \Bigr\rfloor \log{p} + \sum\limits_{\sqrt{2n} \leq p \leq 2n} \log{p} \leq \sqrt{2n}\log{2n} + \theta(2n)\]
+        \pause{}
+        We have proven that for sufficiently large $n \geq 1$,
+        \[\theta(2n) \geq n\log{2} - \sqrt{2n}\log{2n} \geq Cn\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Lower bound of Chebyshev}
+    \begin{block}{Proof.}
+        For $x = 2n + 1$, we also have that
+        \[\theta(x) \geq \theta(2n) \geq Cn \geq \frac{C}{4}x\]
+        \pause{}
+        It is now clear that
+        \[\theta(x) = \sum\limits_{p \leq x} \log{p} \leq \pi(x) \log{x}\]
+        \pause{}
+        Therefore,
+        \[\frac{C}{4}\frac{x}{\log{x}} \leq \frac{\theta(x)}{\log{x}} \leq \pi(x)\]
+    \end{block}
+\end{frame}
+
+\begin{frame}{Work Cited}
+    \begin{thebibliography}{1}
+        \bibitem{M} Mallahi-Karai, K., \href{https://www.dropbox.com/s/msf4auc05s0d1kl/LN-complete_ENT20.pdf?dl=0}{Number Theory Complete Lecture Notes}.
+    \end{thebibliography} 
+\end{frame}
+\end{document}
